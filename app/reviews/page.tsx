@@ -2,7 +2,7 @@ import ReviewCard from "@/components/ReviewCard";
 import {createClient} from "@/lib/supabase/server";
 
 
-export async function getAllReviews(tagsFilter: string[] | null = null) {
+async function getAllReviews(tagsFilter: string[] | null = null) {
     const supabase = await createClient()
 
     // Get current user
