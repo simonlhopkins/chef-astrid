@@ -10,7 +10,7 @@ export async function getAllReviews(tagsFilter: string[] | null = null) {
     if (!user) throw new Error("Not logged in")
 
     // Fetch reviews along with tags
-    let query = supabase
+    const query = supabase
         .from("reviews")
         .select(`
         *,

@@ -19,7 +19,7 @@ export default async function EditPage(props: PageProps<'/reviews/[id]/edit'>) {
         .eq("id", id)   // filter by review id
         .single()             // ensures you only get one row
 
-
+    if (error) throw error
     if (review == null) {
         notFound();
     }

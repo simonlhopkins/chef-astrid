@@ -74,7 +74,7 @@ export function TagsField({name, suggestions}: TagsFieldProps) {
                                                 className={cn(inputValue.length > 0 ? "block" : "hidden")}
 
                                         >
-                                            Add Tag: "{inputValue}"
+                                            Add Tag: &quot;{inputValue}&quot;
                                         </Button>
                                         {suggestions.filter(item => !field.value.includes(item) && item.startsWith(inputValue)).map((suggestion) => (
                                             <Button

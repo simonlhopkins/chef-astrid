@@ -8,7 +8,7 @@ export default function Home() {
             <p>this is a restaurant blog that only YOU can use!</p>
             <p>Click <span><Button asChild><Link href={"/reviews"}>Here</Link></Button></span> to go to your reviews
                 page.</p>
-            <p>Create a review by clicking on the "Create" button in the upper right hand corner.</p>
+            <p>Create a review by clicking on the &quot;Create&quot; button in the upper right hand corner.</p>
             <img src="/astrid_grass.jpeg" alt=""/>
         </div>
     );
