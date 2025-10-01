@@ -39,7 +39,9 @@ export default async function ReviewsPage({searchParams}: Props) {
     const tagsParam = (await searchParams).tags
     console.log(tagsParam)
     const data = await getAllReviews(tagsParam?.split(","));
-
+    if (data.length == 0) {
+        return <h1 className={"m-auto"}>You have no reviews...</h1>
+    }
     return <div className={"grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4"}>
         {data?.map(entry =>
             <ReviewCard
