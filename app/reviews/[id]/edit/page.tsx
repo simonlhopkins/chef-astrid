@@ -35,9 +35,16 @@ export default async function EditPage(props: PageProps<'/reviews/[id]/edit'>) {
     const uniqueTags = Array.from(new Set(tagsData?.map((t) => t.tag)))
 
     return (
-        <EditReviewForm reviewRow={({
-            ...review,
-            tags: review.review_tags.map(t => t.tag)
-        })} existingTags={uniqueTags}/>
+        <div className={"flex w-full flex-col items-center justify-center p-8"}>
+
+            <div className={"w-[500px] flex flex-col gap-3"}>
+                <EditReviewForm reviewRow={({
+                    ...review,
+                    tags: review.review_tags.map(t => t.tag)
+                })} existingTags={uniqueTags}/>
+            </div>
+
+        </div>
+
     )
 }

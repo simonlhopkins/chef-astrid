@@ -1,10 +1,14 @@
 "use client"
 import {Button} from "@/components/ui/button";
-import {redirect} from "next/navigation";
+import Link from "next/link";
 
 
 export default function HomeButton() {
-    return <Button onClick={() => {
-        redirect("/reviews");
-    }}>Home</Button>
+    return (
+        <Button asChild>
+            <Link href={"/reviews"}>
+                Home
+            </Link>
+        </Button>
+    )
 }

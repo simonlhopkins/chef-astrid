@@ -6,7 +6,7 @@ import {redirect} from "next/navigation"
 export default function EditReviewButton({reviewId}: { reviewId: string }) {
 
     return (
-        <Button variant="secondary" onClick={() => {
+        <Button variant="default" onClick={() => {
             redirect(`/reviews/${reviewId}/edit`)
         }}>
             Edit

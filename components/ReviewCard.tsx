@@ -15,7 +15,9 @@ export default function ReviewCard({restaurantName, reviewText, rating, tags, id
 
     return <Card title="Review Card" className={"max-h-64 overflow-hidden"}>
         <CardHeader>
-            <CardTitle className="text-2xl"><Link href={`/reviews/${id}`}>{restaurantName}</Link></CardTitle>
+            <CardTitle className="text-2xl">
+                <Link className={"hover:underline"} href={`/reviews/${id}`}>{restaurantName}</Link>
+            </CardTitle>
         </CardHeader>
         <CardContent>
             <div className={"flex flex-col gap-2"}>
