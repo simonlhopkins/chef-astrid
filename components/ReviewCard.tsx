@@ -25,7 +25,7 @@ export default function ReviewCard({restaurantName, reviewText, rating, tags, id
                     {tags.map(tag => <Badge key={tag}>{tag}</Badge>)}
                 </div>
                 <div className={"flex flex-row gap-2 w-full"}>
-                    {Array.from({length: rating}).map((_, i) => <Star key={i}/>)}
+                    {Array.from({length: rating}).map((_, i) => <Star className={"fill-primary"} key={i}/>)}
                 </div>
                 <p className={"line-clamp-3"}>{reviewText}</p>
             </div>

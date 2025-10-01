@@ -24,7 +24,7 @@ export default function DeleteReviewButton({reviewId}: { reviewId: string }) {
     };
 
     return (
-        <Button variant="destructive" onClick={handleDelete}>
+        <Button variant="destructive" className={"cursor-pointer"} onClick={handleDelete}>
             Delete
         </Button>
     );
