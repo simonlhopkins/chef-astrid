@@ -19,7 +19,7 @@ export default async function CreatePage() {
     return (
         <div className={"flex w-full flex-col items-center justify-center p-8"}>
 
-            <div className={"w-[500px] flex flex-col gap-3"}>
+            <div className={"w-[500px] max-w-full flex flex-col gap-3"}>
                 <CreateNewReviewForm existingTags={uniqueTags}/>
             </div>
 
