@@ -1,11 +1,12 @@
 "use client"
 
 import * as React from "react"
+import {useState} from "react"
 import {useFormContext} from "react-hook-form"
 import {FormControl, FormField, FormItem, FormLabel, FormMessage} from "@/components/ui/form"
 import {X} from "lucide-react"
 import {Badge} from "@/components/ui/badge";
-import {Popover, PopoverContent, PopoverTrigger} from "@/components/ui/popover"
+import {Popover, PopoverContent, PopoverTrigger} from "@/components/ui/popover";
 import {Input} from "@/components/ui/input";
 import {Button} from "@/components/ui/button";
 import {cn} from "@/lib/utils";
@@ -17,9 +18,16 @@ interface TagsFieldProps {
 
 export function TagsField({name, suggestions}: TagsFieldProps) {
     const {control} = useFormContext()
-    const [inputValue, setInputValue] = React.useState("")
+    const [inputValue, setInputValue] = useState("")
+    const [searchValue, setSearchValue] = useState<string>("");
+
     const [open, setOpen] = React.useState(false)
 
+
+    const reset = () => {
+        setOpen(false)
+        setInputValue("");
+    }
     return (
         <FormField
             name={name}
@@ -59,6 +67,7 @@ export function TagsField({name, suggestions}: TagsFieldProps) {
                                             if (event.key === "Enter") {
                                                 event.preventDefault();
                                                 field.onChange(Array.from(new Set([...field.value, inputValue])))
+                                                reset()
                                             }
                                         }}
                                     />
@@ -76,14 +85,14 @@ export function TagsField({name, suggestions}: TagsFieldProps) {
                                         >
                                             Add Tag: &quot;{inputValue}&quot;
                                         </Button>
-                                        {suggestions.filter(item => !field.value.includes(item) && item.startsWith(inputValue)).map((suggestion) => (
+                                        {suggestions.filter(item => !field.value.includes(item) && inputValue.length > 0 && item.startsWith(inputValue)).map((suggestion) => (
                                             <Button
                                                 key={suggestion}
                                                 value={suggestion}
                                                 variant={"ghost"}
                                                 onClick={() => {
                                                     field.onChange(Array.from(new Set([...field.value, suggestion])))
-                                                    setOpen(false)
+                                                    reset()
                                                 }}
                                             >
                                                 {suggestion}

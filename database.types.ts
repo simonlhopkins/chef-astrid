@@ -41,7 +41,7 @@ export type Database = {
         Row: {
           created_at: string | null
           date_visited: string | null
-          google_place_id: string
+          google_place_id: string | null
           id: string
           name: string
           rating: number
@@ -51,7 +51,7 @@ export type Database = {
         Insert: {
           created_at?: string | null
           date_visited?: string | null
-          google_place_id: string
+          google_place_id?: string | null
           id?: string
           name: string
           rating: number
@@ -61,7 +61,7 @@ export type Database = {
         Update: {
           created_at?: string | null
           date_visited?: string | null
-          google_place_id?: string
+          google_place_id?: string | null
           id?: string
           name?: string
           rating?: number

@@ -13,24 +13,29 @@ interface Props {
 
 export default function ReviewCard({restaurantName, reviewText, rating, tags, id}: Props) {
 
-    return <Card title="Review Card" className={"max-h-64 overflow-hidden"}>
-        <CardHeader>
-            <CardTitle className="text-2xl">
-                <Link className={"hover:underline"} href={`/reviews/${id}`}>{restaurantName}</Link>
-            </CardTitle>
-        </CardHeader>
-        <CardContent>
-            <div className={"flex flex-col gap-2"}>
-                <div className={"flex flex-wrap gap-2 w-full"}>
-                    {tags.map(tag => <Badge key={tag}>{tag}</Badge>)}
-                </div>
-                <div className={"flex flex-row gap-2 w-full"}>
-                    {Array.from({length: rating}).map((_, i) => <Star className={"fill-primary"} key={i}/>)}
-                </div>
-                <p className={"line-clamp-3"}>{reviewText}</p>
-            </div>
+    return (
+        <Link href={`/reviews/${id}`}>
+            <Card title="Review Card" className={"max-h-64 overflow-hidden h-full"}>
+                <CardHeader>
+                    <CardTitle className="text-2xl">
+                        {restaurantName}
+                    </CardTitle>
+                </CardHeader>
+                <CardContent>
+                    <div className={"flex flex-col gap-2"}>
+                        <div className={"flex flex-wrap gap-2 w-full"}>
+                            {tags.map(tag => <Badge key={tag}>{tag}</Badge>)}
+                        </div>
+                        <div className={"flex flex-row gap-2 w-full"}>
+                            {Array.from({length: rating}).map((_, i) => <Star className={"fill-primary"} key={i}/>)}
+                        </div>
+                        <p className={"line-clamp-3"}>{reviewText}</p>
+                    </div>
 
-        </CardContent>
-    </Card>
+                </CardContent>
+            </Card>
+        </Link>
+    )
+
 }
 

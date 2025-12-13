@@ -17,7 +17,7 @@ export default function CreateNewReviewForm({existingTags}: Props) {
     )
 }
 
-async function insertValuesToSupabase(formResult: ReviewFormSchemaType) {
+async function insertValuesToSupabase(formResponse: ReviewFormSchemaType) {
     // Do something with the form values.
     // ✅ This will be type-safe and validated.
     const supabase = createClient()
@@ -27,11 +27,11 @@ async function insertValuesToSupabase(formResult: ReviewFormSchemaType) {
         .from("reviews")
         .insert([
             {
-                name: formResult.restaurantName,
-                date_visited: formResult.date_visited.toLocaleDateString(),
-                rating: formResult.rating,
-                review_text: formResult.review,
-                google_place_id: "none"
+                name: formResponse.restaurantName,
+                date_visited: formResponse.date_visited.toLocaleDateString(),
+                rating: formResponse.rating,
+                review_text: formResponse.review,
+                google_place_id: formResponse.placeId || "N/A"
             }
         ])
         .select() // return the inserted row(s)
@@ -45,11 +45,11 @@ async function insertValuesToSupabase(formResult: ReviewFormSchemaType) {
     const reviewId = reviewData[0].id
 
     // 2️⃣ Insert the tags
-    if (formResult.tags.length > 0) {
+    if (formResponse.tags.length > 0) {
         const {error: tagsError} = await supabase
             .from("review_tags")
             .insert(
-                formResult.tags.map((tag) => ({
+                formResponse.tags.map((tag) => ({
                     review_id: reviewId,
                     tag,
                 }))

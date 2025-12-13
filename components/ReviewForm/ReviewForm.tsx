@@ -13,9 +13,9 @@ import {Calendar} from "@/components/ui/calendar";
 import {CalendarIcon} from "lucide-react";
 import {format} from "date-fns";
 import {Textarea} from "@/components/ui/textarea";
-import {createClient} from "@/lib/supabase/client";
 import {TagsField} from "@/components/ReviewForm/TagsField";
 import StarRating from "@/components/ReviewForm/StarRating";
+import GoogleMapsField from "@/components/ReviewForm/GoogleMapsField";
 
 
 const reviewFormSchema = z.object({
@@ -43,36 +43,13 @@ const reviewFormSchema = z.object({
                 .max(30, "Tag must be at most 30 characters")
         )
         .max(10, "You can add up to 10 tags"),
+    placeId: z
+        .string()
+        .regex(/^ChIJ[0-9A-Za-z_-]{9,}$/i, "Invalid Google Place ID") // basic format check
+        .optional(),
 })
 
 export type ReviewFormSchemaType = z.infer<typeof reviewFormSchema>;
-
-
-type ReviewUpdate = Database["public"]["Tables"]["reviews"]["Update"]
-
-export async function updateReview(
-    reviewId: string,
-    updates: ReviewUpdate,
-    tags: string[]
-) {
-    const supabase = createClient()
-
-    const {data, error} = await supabase
-        .from("reviews")
-        .update(updates)       // 👈 only updates provided fields
-        .eq("id", reviewId)    // 👈 where id = reviewId
-        .select()              // 👈 return updated row(s)
-
-    if (error) {
-        console.error("Update review error:", error.message)
-        throw error
-    }
-
-    await supabase.from("review_tags").delete().eq("review_id", reviewId)
-    await supabase.from("review_tags").insert(tags.map(tag => ({review_id: reviewId, tag})))
-
-    return data[0]
-}
 
 type ReviewRow = Database["public"]["Tables"]["reviews"]["Row"]
 
@@ -85,7 +62,6 @@ interface Props {
 
 export default function ReviewForm({tags, defaultValues, onFormSubmit}: Props) {
     // 1. Define your form.
-
     const form = useForm<ReviewFormSchemaType>({
         resolver: zodResolver(reviewFormSchema),
         defaultValues: {
@@ -93,7 +69,8 @@ export default function ReviewForm({tags, defaultValues, onFormSubmit}: Props) {
             date_visited: new Date(defaultValues?.date_visited ?? Date.now()),
             review: defaultValues?.review_text ?? "",
             rating: defaultValues?.rating ?? 0,
-            tags: defaultValues?.tags ?? []
+            tags: defaultValues?.tags ?? [],
+            placeId: defaultValues?.google_place_id ?? undefined
         },
     })
 
@@ -118,6 +95,7 @@ export default function ReviewForm({tags, defaultValues, onFormSubmit}: Props) {
                         </FormItem>
                     )}
                 />
+                <GoogleMapsField name={"placeId"} query={form.watch("restaurantName")}/>
                 <FormField
                     control={form.control}
                     name="date_visited"
@@ -202,5 +180,6 @@ export default function ReviewForm({tags, defaultValues, onFormSubmit}: Props) {
             </form>
         </Form>
     )
-
 }
+
+

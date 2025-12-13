@@ -15,7 +15,7 @@ interface Props {
 export default function EditReviewForm({existingTags, reviewRow}: Props) {
 
     return (
-        
+
         <ReviewForm
             tags={existingTags}
             onFormSubmit={async (data) => {
@@ -42,7 +42,7 @@ export async function updateReview(
             date_visited: formResponse.date_visited.toLocaleDateString(),
             rating: formResponse.rating,
             review_text: formResponse.review,
-            google_place_id: "none"
+            google_place_id: formResponse.placeId || "N/A"
         })       // 👈 only updates provided fields
         .eq("id", reviewId)    // 👈 where id = reviewId
         .select()              // 👈 return updated row(s)
