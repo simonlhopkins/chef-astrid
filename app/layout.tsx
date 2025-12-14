@@ -34,7 +34,6 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <body className={`${geistSans.className} antialiased`}>
-        {process.env.GOOGLE_MAPS_API_KEY}
         <ThemeProvider
           attribute="class"
           defaultTheme="system"
